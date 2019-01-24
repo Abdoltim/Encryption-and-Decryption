@@ -5,17 +5,18 @@
 
 import collections
 import string
-import ctypes
 from tkinter import *
+
 
 def popupmsg(msg):
     popup = tk.Tk()
     popup.wm_title("!")
     label = ttk.Label(popup, text=msg, font=NORM_FONT)
     label.pack(side="top", fill="x", pady=10)
-    B1 = ttk.Button(popup, text="Okay", command = popup.destroy)
+    B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
     B1.pack()
     popup.mainloop()
+
 
 def encryption(rotate_string, number_to_rotate_by):
     upper = collections.deque(string.ascii_uppercase)
@@ -27,36 +28,35 @@ def encryption(rotate_string, number_to_rotate_by):
     upper = ''.join(list(upper))
     lower = ''.join(list(lower))
 
-    msg = rotate_string.translate(str.maketrans(string.ascii_uppercase, upper)).translate(str.maketrans(string.ascii_lowercase, lower))
-    popupmsg (msg)
+    msg = rotate_string.translate(str.maketrans(string.ascii_uppercase, upper)).translate(
+        str.maketrans(string.ascii_lowercase, lower))
+    return(msg)
 
 
-root = Tk()
-topFrame = Frame(root)
-topFrame.pack()
-bottomFrame = Frame(root)
-bottomFrame.pack(side=BOTTOM)
+def encrypt():
+    encrypted = encryption(e1.get(), int(e2.get()))
+    print("Your encryption is: " + encrypted)
 
 
-label1 = Label(topFrame, text = "Welcome to my encryption and decryption software")
-label1.pack()
+def decrypt():
+    decrypted = encryption(e1.get(), -int(e2.get()))
+    popupmsg("Your decryption is: " + decrypted)
 
-labelMsg = Label(topFrame, text="Message")
-labelMsg.pack(side = LEFT)
-msg = Entry(topFrame)
-msg.pack(side = LEFT)
+master = Tk()
+Label(master, text="Message").grid(row=0)
+Label(master, text="Key").grid(row=1)
 
-labelKey = Label(topFrame, text="Key")
-labelKey.pack(side = LEFT)
-key = Entry(topFrame,show = "*")
-key.pack(side = LEFT)
+e1 = Entry(master)
+e2 = Entry(master, show="*")
 
-btn1 = Button(bottomFrame,text="Encrypt", command = lambda: encryption(msg,key))
-btn2 = Button(bottomFrame,text="Decrypt", command = lambda: encryption(msg,-key))
-btn1.pack(side=LEFT)
-btn2.pack(side=RIGHT)
-root.mainloop()
+e1.grid(row=0, column=1)
+e2.grid(row=1, column=1)
 
+Button(master, text='Quit', command=master.quit).grid(row=5, column=0, sticky=W, pady=4)
+Button(master, text='Encrypt', command=encrypt).grid(row=3, column=0, sticky=W, pady=4)
+Button(master, text='Decrypt', command=decrypt).grid(row=4, column=0, sticky=W, pady=4)
+
+mainloop()
 
 # stop = True
 # print("Welcome to my encryption and decryption software")
