@@ -5,17 +5,21 @@
 
 import collections
 import string
+import tkinter as tk
 from tkinter import *
+from tkinter import ttk
+from tkinter.messagebox import showinfo
 
 
-# def popupmsg(msg):
-#     popup = tk.Tk()
-#     popup.wm_title("!")
-#     label = ttk.Label(popup, text=msg, font=NORM_FONT)
-#     label.pack(side="top", fill="x", pady=10)
-#     B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
-#     B1.pack()
-#     popup.mainloop()
+
+def popupmsg(msg):
+    popup = tk.Tk()
+    popup.wm_title("!")
+    label = ttk.Label(popup, text=msg)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = ttk.Button(popup, text="Okay", command=popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 
 def encryption(rotate_string, number_to_rotate_by):
@@ -36,18 +40,17 @@ def encryption(rotate_string, number_to_rotate_by):
 def encrypt():
     key = int(e2.get())
     encrypted = encryption(e1.get(), key)
-    print("Your encryption is: " + encrypted)
+    popupmsg("Your encryption is: " + encrypted)
 
 
 def decrypt():
     key = int(e2.get())
     decrypted = encryption(e1.get(),-key)
-    print("Your decryption is: " + decrypted)
+    popupmsg("Your decryption is: " + decrypted)
 
 master = Tk()
 Label(master, text="Message").grid(row=0)
 Label(master, text="Key").grid(row=1)
-
 e1 = Entry(master)
 e2 = Entry(master, show="*")
 e1.grid(row=0, column=1)
